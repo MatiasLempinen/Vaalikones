@@ -120,8 +120,12 @@ public class Kayttaja implements Serializable {
          *  Javan Collections.sort oletuksena järjestää listat pienimmästä suurimpaan
          *  Collections.reverseOrder kääntää järjestyksen toisin päin
          */
+    	try {
         Collections.sort(this.pisteet, Collections.reverseOrder(comparator));
-        
+    	}
+    	catch (Exception e) {
+    		
+    	}
 //        this.pisteet.stream().forEach((tpl) -> {
 //            logger.log(Level.INFO, "Ehdokas ID={0} pisteet={1}", new Object[]{tpl.ehdokasId, tpl.pisteet});
 //        });
