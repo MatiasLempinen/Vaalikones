@@ -15,32 +15,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.Table;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.appengine.api.utils.SystemProperty;
-import com.google.cloud.sql.jdbc.ResultSet;
-import com.google.cloud.sql.jdbc.Statement;
 
 import persist.Ehdokkaat;
 import persist.Kysymykset;
 import persist.Vastaukset;
 
 /**
- * Vaalikone-servlet, vastaa vaalikoneen varsinaisesta toiminnallisuudesta
  *
  * @author Jonne
  */
@@ -63,7 +56,11 @@ public class Candidates extends HttpServlet {
             throws ServletException, IOException {
 
         int kysymys_id;
-
+        
+        // get the ID and parse it
+        String idstring = request.getParameter("candidateid");
+        int id = Integer.parseInt(idstring);
+        
         // hae http-sessio ja luo uusi jos vanhaa ei ole vielä olemassa
         HttpSession session = request.getSession(true);
 
@@ -76,6 +73,9 @@ public class Candidates extends HttpServlet {
             logger.log(Level.FINE, "Luotu uusi k�ytt�j�olio");
             session.setAttribute("usrobj", usr);
         }
+        
+
+        //entity manager        
         EntityManagerFactory emf=null;
         EntityManager em = null;
         try {
@@ -89,6 +89,20 @@ public class Candidates extends HttpServlet {
           	
           	return;
         }
+
+        
+        // search the database for a candidate with given id 
+        // and set his names to attributes so we can print them in jsp
+        try {
+            Ehdokkaat ehdokas = em.find(Ehdokkaat.class, id); 
+            
+            request.setAttribute("ehdokasFirstName", ehdokas.getEtunimi());
+            request.setAttribute("ehdokasLastName", ehdokas.getSukunimi());
+                       
+        } catch (Exception e) {
+        }
+		     
+
         
         //hae url-parametri func joka määrittää toiminnon mitä halutaan tehdä.
         //func=haeEhdokas: hae tietyn ehdokkaan tiedot ja vertaile niitä käyttäjän vastauksiin
@@ -128,7 +142,7 @@ public class Candidates extends HttpServlet {
                     //Lue haluttu kysymys listaan
                     List<Kysymykset> kysymysList = q.getResultList();
                     request.setAttribute("kysymykset", kysymysList);
-                    request.getRequestDispatcher("/vastaus.jsp")
+                    request.getRequestDispatcher("/candidate.jsp")
                             .forward(request, response);
 
                 } finally {
@@ -264,13 +278,6 @@ public class Candidates extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-       
-//        String id = request.getParameter("candidateid");  
-//        String strKysymys_id = request.getParameter("q");
-//        EntityManager em = null;
-//        Query q = em.createQuery("select * from ehdokkaat where ehdokas_id = '" + id + "'") ;
-//        response.getWriter().println(q);
-       
 
     }
 

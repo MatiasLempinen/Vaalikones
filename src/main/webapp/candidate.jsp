@@ -1,9 +1,3 @@
-<%-- 
-    Document   : vastaus
-    Created on : 09-Apr-2015, 12:50:47
-    Author     : Jonne
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*,vaalikone.Vaalikone,persist.*"%>
 <!doctype html>
@@ -40,14 +34,18 @@
                     <input type="submit" id="submitnappi" value="Vastaa" />
                 </form>
                     <div class="kysymys"><small>1=Täysin eri mieltä 2=Osittain eri mieltä 3=En osaa sanoa, 4=Osittain samaa mieltä 5=Täysin samaa mieltä</small></div>
+                                                            
                 <%
             } 
         %>
 
-
-
+			<div id=candidate>
+			<p> ${ehdokasFirstName} ${ehdokasLastName}</p>
+			</div>
 
 </div>
+
+
 
 </body>
 </html>
