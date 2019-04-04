@@ -98,6 +98,8 @@ public class Candidates extends HttpServlet {
             
             request.setAttribute("ehdokasFirstName", ehdokas.getEtunimi());
             request.setAttribute("ehdokasLastName", ehdokas.getSukunimi());
+            request.setAttribute("candidadeid", ehdokas.getEhdokasId());
+            
                        
         } catch (Exception e) {
         }
