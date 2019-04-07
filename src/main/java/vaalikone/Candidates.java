@@ -36,6 +36,8 @@ import com.google.cloud.sql.jdbc.Connection;
 import com.google.cloud.sql.jdbc.ResultSet;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
+
+import persist.Answer;
 import persist.Ehdokkaat;
 import persist.Kysymykset;
 import persist.Vastaukset;
@@ -65,8 +67,8 @@ public class Candidates extends HttpServlet {
         int kysymys_id;
         
         // get the ID and parse it
-        String idstring = request.getParameter("candidateid");
-        int id = Integer.parseInt(idstring);
+        String idstring = request.getParameter("candidateid");                
+        int id = Integer.parseInt(idstring.trim());
        
         
         
@@ -103,18 +105,41 @@ public class Candidates extends HttpServlet {
         // search the database for a candidate with given id 
         // and set his names to attributes so we can print them in jsp
         try {
-            Ehdokkaat ehdokas = em.find(Ehdokkaat.class, id); 
+        	Ehdokkaat ehdokas = em.find(Ehdokkaat.class, id); 
             
             request.setAttribute("ehdokasFirstName", ehdokas.getEtunimi());
             request.setAttribute("ehdokasLastName", ehdokas.getSukunimi());
-            request.setAttribute("candidadeid", ehdokas.getEhdokasId());
-            
-                       
+            request.setAttribute("candidateid", ehdokas.getEhdokasId());
+               
         } catch (Exception e) {
+        	request.setAttribute("Error", e);
         }
-       
-		     
 
+
+        try {
+        	
+        // new entity            
+ 		Answer answer = new Answer();
+ 		 		
+        // get the values for the "answer" entity
+        int questionID = parseInt(request.getParameter("q"));
+        int answer1 = parseInt(request.getParameter("vastaus"));
+        String comment = request.getParameter("comment");
+                
+ 		// set the values for this entity     		
+		answer.setEhdokasid(id);
+		answer.setKysymysid(questionID);
+		answer.setVastaus(answer1);
+		answer.setKommentti(comment);
+        
+        // save this entity to database
+        em.getTransaction().begin();
+        em.persist(answer);
+        em.getTransaction().commit();
+        
+        } catch (Exception e) {
+        	request.setAttribute("Error", e);
+        }
         
         //hae url-parametri func joka määrittää toiminnon mitä halutaan tehdä.
         //func=haeEhdokas: hae tietyn ehdokkaan tiedot ja vertaile niitä käyttäjän vastauksiin
@@ -288,9 +313,7 @@ public class Candidates extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
-
+        processRequest(request, response);        
     }
 
     /**
@@ -304,57 +327,8 @@ public class Candidates extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
-//    
-//       	
-        
-        response.setContentType("text/html");  
-        PrintWriter pw = response.getWriter(); 
-        String connectionURL = "jdbc:mysql://127.0.0.1:3306/vaalikone";// newData is the database  
-        java.sql.Connection connection;  
-        Connection conn=null;
-        String url="jdbc:mysql://localhost:3306/";
-        String dbName="vaalikone";
-        String driver="com.mysql.jdbc.Driver";
-    //String dbUserName="root";
-    //String dbPassword="root";
-       
-    try{  
-      String name= request.getParameter("name"); 
-      int id = Integer.parseInt(name);
-      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-      DriverManager.getConnection("jdbc:odbc:northwind", "root", ""); 
-   // Get a Connection to the database
-      connection = DriverManager.getConnection
-    		  (connectionURL, "root", "");
-
-      String sql = 
-    		  "insert into 'vaalikone'.'vastaukset' (ehdokas_id, kysymys_id, vastaus, kommentti) values (+2+, +2+, +2+, '"+name+"')";
-    		  com.google.cloud.sql.jdbc.PreparedStatement pst = 
-    		  conn.prepareStatement(sql);
-      pst.setString(1,name); 
-      
-      int i = pst.executeUpdate();
-      conn.commit(); 
-      String msg=" ";
-      if(i!=0){  
-        msg="Record has been inserted";
-        pw.println("<font size='6' color=blue>" + msg + "</font>");  
-
-
-      }  
-      else{  
-          msg="failed to insert the data";
-          pw.println("<font size='6' color=blue>" + msg + "</font>");
-         }  
-        pst.close();
-      }  
-      catch (Exception e){  
-        pw.println(e);  
-      }  
-
-
-        	  }
+        processRequest(request, response);
+    }
 
 
     
