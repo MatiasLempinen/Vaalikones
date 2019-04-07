@@ -6,6 +6,10 @@
 package vaalikone;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import static java.lang.Integer.parseInt;
 
 import java.util.HashMap;
@@ -28,7 +32,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.appengine.api.utils.SystemProperty;
-
+import com.google.cloud.sql.jdbc.Connection;
+import com.google.cloud.sql.jdbc.ResultSet;
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 import persist.Ehdokkaat;
 import persist.Kysymykset;
 import persist.Vastaukset;
@@ -60,6 +67,8 @@ public class Candidates extends HttpServlet {
         // get the ID and parse it
         String idstring = request.getParameter("candidateid");
         int id = Integer.parseInt(idstring);
+       
+        
         
         // hae http-sessio ja luo uusi jos vanhaa ei ole vielä olemassa
         HttpSession session = request.getSession(true);
@@ -101,6 +110,7 @@ public class Candidates extends HttpServlet {
                        
         } catch (Exception e) {
         }
+       
 		     
 
         
@@ -292,8 +302,60 @@ public class Candidates extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+       // processRequest(request, response);
+//    
+//       	
+        
+        response.setContentType("text/html");  
+        PrintWriter pw = response.getWriter(); 
+        String connectionURL = "jdbc:mysql://127.0.0.1:3306/vaalikone";// newData is the database  
+        java.sql.Connection connection;  
+        Connection conn=null;
+        String url="jdbc:mysql://localhost:3306/";
+        String dbName="vaalikone";
+        String driver="com.mysql.jdbc.Driver";
+    //String dbUserName="root";
+    //String dbPassword="root";
+       
+    try{  
+      String name= request.getParameter("name"); 
+      int id = Integer.parseInt(name);
+      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+      DriverManager.getConnection("jdbc:odbc:northwind", "root", ""); 
+   // Get a Connection to the database
+      connection = DriverManager.getConnection
+    		  (connectionURL, "root", "");
+
+      String sql = 
+    		  "insert into 'vaalikone'.'vastaukset' (ehdokas_id, kysymys_id, vastaus, kommentti) values (+2+, +2+, +2+, '"+name+"')";
+    		  com.google.cloud.sql.jdbc.PreparedStatement pst = 
+    		  conn.prepareStatement(sql);
+      pst.setString(1,name); 
+      
+      int i = pst.executeUpdate();
+      conn.commit(); 
+      String msg=" ";
+      if(i!=0){  
+        msg="Record has been inserted";
+        pw.println("<font size='6' color=blue>" + msg + "</font>");  
+
+
+      }  
+      else{  
+          msg="failed to insert the data";
+          pw.println("<font size='6' color=blue>" + msg + "</font>");
+         }  
+        pst.close();
+      }  
+      catch (Exception e){  
+        pw.println(e);  
+      }  
+
+
+        	  }
+
+
+    
 
     /**
      * Returns a short description of the servlet.

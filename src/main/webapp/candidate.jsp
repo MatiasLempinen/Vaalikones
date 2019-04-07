@@ -32,15 +32,21 @@
                     <label>5</label><input type="radio" name="vastaus" value="5" />
                     <input type="hidden" name="q" value="<%= kysymys.getKysymysId() %>">
                     <input type="submit" id="submitnappi" value="Vastaa" />
-                </form>
+                </form >
                     <div class="kysymys"><small>1=Täysin eri mieltä 2=Osittain eri mieltä 3=En osaa sanoa, 4=Osittain samaa mieltä 5=Täysin samaa mieltä</small></div>
-                                                            
+                       <form action="Candidates" method="post" style="margin-left:200px; margin-top:-10px; width:100px">
+<textarea name="name" rows="4" cols="50" placeholder="Type your comment here..."></textarea> 
+								<input type="submit" />
+								</form>                                     
                 <%
             } 
         %>
 
 			<div id=candidate>
 			<p> ${ehdokasFirstName} ${ehdokasLastName}</p>
+			</div>
+			<div id=name>
+			<p> ${ehdokasKommentti}</p>
 			</div>
 
 </div>
