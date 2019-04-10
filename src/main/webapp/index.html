@@ -25,22 +25,25 @@ and open the template in the editor.
                                 </form>
                                 
                                 <form action="Candidates" style="margin-left:300px; margin-top:50px;">
-
+								<h3>Add candidates answers:</h3>
 								Candidate id: <input type="text" name="candidateid" style="width=50;"><br>
 								<input type="submit" />
 								</form>
 								
 								<form action="Delete" style="margin-left:300px; margin-top:50px;">
-
-								Candidate id(delete): <input type="text" name="candidateidd" style="width=50;"><br>
-								
-								
-
-								Question id(delete): <input type="text" name="questionidd" style="width=50;"><br>
+								<h3>Delete candidates answer:</h3>
+								Candidate id: <input type="text" name="candidateidd" style="width=50;"><br>																
+								Question id: &nbsp;&nbsp;<input type="text" name="questionidd" style="width=50;"><br>
 								<input type="submit" />
 								</form>
 								
-           
+								
+								<form action="Retrieve" style="margin-left:300px; margin-top:50px;">
+								<h3> Edit candidates answer:</h3>
+								Candidate id: <input type="text" name="candidateid" style="width=50;"><br>
+								Question id: &nbsp;&nbsp;<input type="text" name="questionid" style="width=50;"><br>
+								<input type="submit" />
+								</form>         
            
         </div>
     </body>

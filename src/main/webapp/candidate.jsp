@@ -32,7 +32,7 @@
                     <label>5</label><input type="radio" name="vastaus" value="5" />
                     <input type="hidden" name="q" value="<%= kysymys.getKysymysId() %>">
                     <input type="hidden" name="candidateid" value=${candidateid}>                     
-					<textarea name="comment" rows="4" cols="50" placeholder="Type your comment here..."></textarea> 					  
+					<textarea name="comment" rows="1" cols="50" maxlength="50" placeholder="Type your comment here..."></textarea> 					  
                     <input type="submit" id="submitnappi" value="Vastaa" />
                 </form >
                     
