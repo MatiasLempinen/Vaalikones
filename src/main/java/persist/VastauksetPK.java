@@ -33,7 +33,7 @@ public class VastauksetPK implements Serializable {
      */
     public VastauksetPK() {
     }
-
+  
     /**
      *
      * @param ehdokasId
