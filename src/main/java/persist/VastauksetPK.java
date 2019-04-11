@@ -29,6 +29,7 @@ public class VastauksetPK implements Serializable {
     private int kysymysId;
 
     /**
+     * @param  
      *
      */
     public VastauksetPK() {
@@ -39,6 +40,11 @@ public class VastauksetPK implements Serializable {
      * @param ehdokasId
      * @param kysymysId
      */
+    
+    public VastauksetPK(int idc) {
+  
+    }
+    
     public VastauksetPK(int ehdokasId, int kysymysId) {
         this.ehdokasId = ehdokasId;
         this.kysymysId = kysymysId;

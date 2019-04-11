@@ -67,7 +67,7 @@ public class Candidates extends HttpServlet {
         int kysymys_id;
         
         // get the ID and parse it
-        String idstring = request.getParameter("candidateid");                
+        String idstring = request.getParameter("candidateidd");                
         int id = Integer.parseInt(idstring.trim());
        
         

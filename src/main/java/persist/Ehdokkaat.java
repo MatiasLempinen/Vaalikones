@@ -82,6 +82,10 @@ public class Ehdokkaat implements Serializable {
     public Ehdokkaat(Integer ehdokasId) {
         this.ehdokasId = ehdokasId;
     }
+    
+  //  public Ehdokkaat(Integer ehdokasId, String sukunimi, String etunimi, String puolue, String kotipaikkakunta, Integer ika, String miksiEduskuntaan, String mitaAsioitaHaluatEdistaa, String ammatti) {
+    //	this.ehdokasId = ehdokasId;
+   // }
 
     /**
      *
