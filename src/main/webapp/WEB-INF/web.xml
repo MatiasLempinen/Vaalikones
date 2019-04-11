@@ -16,7 +16,7 @@
     <servlet-name>Candidates</servlet-name>
     <url-pattern>/Candidates</url-pattern>
   </servlet-mapping>
-   <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>Vaalikone</servlet-name>
     <url-pattern>/Vaalikone</url-pattern>
   </servlet-mapping>
