@@ -1,6 +1,7 @@
 
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,13 @@ public class Delete extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		response.setContentType("text/html");
+        java.io.PrintWriter out = response.getWriter();
+		
+      
+        
+        
 		String idstring = request.getParameter("candidateidd");                
         int idc = Integer.parseInt(idstring.trim());
         
@@ -85,6 +93,9 @@ public class Delete extends HttpServlet {
         } catch (Exception e) {
         	response.getWriter().println();
         }
+        
+        out.println("The candidate " + idc + " and question " + idq + " has been deleted");
+        out.println("<br><br><a href=\"index.html\">Go Back</a>");
         
         
 	}
