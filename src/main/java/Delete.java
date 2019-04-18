@@ -51,9 +51,6 @@ public class Delete extends HttpServlet {
         String idqstring = request.getParameter("questionidd");                
         int idq = Integer.parseInt(idqstring.trim());
         
-        List list= new ArrayList();
-        list.add(idc);
-        list.add(idq);
         
         //entity manager        
         EntityManagerFactory emf=null;
@@ -71,15 +68,6 @@ public class Delete extends HttpServlet {
         }
 
         try {
-//        	 Answer answer = em.find(Answer.class, list);
-//            
-//        	 response.getWriter().println(answer.getKommentti());
-//        	 
-//        	 //delete
-//        	em.getTransaction().begin();
-//     		em.remove(answer);
-//     		em.getTransaction().commit();
-//     		em.close();
         	
         	VastauksetPK answerPK = new VastauksetPK(idc,idq);
         	Vastaukset answer = em.find(Vastaukset.class, answerPK);

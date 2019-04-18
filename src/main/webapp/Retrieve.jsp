@@ -13,15 +13,19 @@
 
 <div id="container">
 <img id="headerimg" src="Logo.png" width="500" height="144" alt=""/>
-
+<div id="stuff" style="margin-left:300px; margin-top:50px;">
 <h4>Candidate id</h4>
 <p>${candidateid}</p>
 <h4>Question number</h4>
 <p>${q}</p>
+<h4>Question</h4>
+<p>${question}</p>
 <h4>Answer (1-5)</h4>
 <p>${answer}</p>
 <h4>Comment</h4>
 <p>${comment}</p>
+
+</div>
 
 			<form action="Edit" style="margin-left:300px; margin-top:50px;">
 			<p> Change answers:</p>

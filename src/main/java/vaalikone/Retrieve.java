@@ -1,5 +1,7 @@
 package vaalikone;
 
+import static java.lang.Integer.parseInt;
+
 import java.io.IOException;
 
 import javax.persistence.EntityManager;
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import persist.Answer;
+import persist.Ehdokkaat;
+import persist.Kysymykset;
 import persist.Vastaukset;
 import persist.VastauksetPK;
 
@@ -58,16 +62,23 @@ public class Retrieve extends HttpServlet {
         }
         
         try {
-
+        	
+            //"question" entity
+        	int questionid = parseInt(request.getParameter("questionid"));
+        	Kysymykset kysymys = em.find(Kysymykset.class, questionid); 
+        	
+        	
+        	//new entity for answer
         	VastauksetPK answerPK = new VastauksetPK(id,id1);
         	Vastaukset answer = em.find(Vastaukset.class, answerPK);
         	
-        	
+        	//get stuff from DB and set it to attributes so we can print them in .jsp
         	request.setAttribute("answer", answer.getVastaus());
         	request.setAttribute("comment", answer.getKommentti());
         	request.setAttribute("q", request.getParameter("questionid"));
         	request.setAttribute("candidateid", id);
-        	
+        	request.setAttribute("question", kysymys.getKysymys());
+        	//forward to .jsp
         	String nextJSP = "/Retrieve.jsp";
         	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
         	dispatcher.forward(request,response);

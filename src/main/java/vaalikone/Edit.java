@@ -40,6 +40,7 @@ public class Edit extends HttpServlet {
 		
 	    response.setContentType("text/HTML");
 	    response.setCharacterEncoding("UTF-8");
+	    
 		//entity manager        
         EntityManagerFactory emf=null;
         EntityManager em = null;
@@ -56,9 +57,7 @@ public class Edit extends HttpServlet {
         }
         
         try {
-        	
-
- 		 		
+        			 		
         // get the values for the "answer" entity
         int questionID = parseInt(request.getParameter("q"));
         int answer1 = parseInt(request.getParameter("answer"));
